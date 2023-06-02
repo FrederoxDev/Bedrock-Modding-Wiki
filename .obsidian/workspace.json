@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "320d8152002b5f09",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Function definitions & Symbols.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Member Variables, Enums and Structs.md",
+                "file": "Function definitions & Symbols.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Member Variables, Enums and Structs.md",
+                "file": "Function definitions & Symbols.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Member Variables, Enums and Structs.md"
+                "file": "Function definitions & Symbols.md"
               }
             }
           }
@@ -146,8 +159,9 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "59c537fb1744a5d3",
+  "active": "320d8152002b5f09",
   "lastOpenFiles": [
-    "Member Variables, Enums and Structs.md"
+    "Member Variables, Enums and Structs.md",
+    "Function definitions & Symbols.md"
   ]
 }
