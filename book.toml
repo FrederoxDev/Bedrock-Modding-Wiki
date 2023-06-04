@@ -1,0 +1,6 @@
+[book]
+authors = ["FrederoxDev"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Bedrock Modding Guide"
