@@ -1,4 +1,4 @@
-# Introduction
+# 1 - Introduction
 
 In this guide it will be assumed that you have existing knowledge in programming. You do not specifically need c++ knowledge, but it would be good to understand the concepts in programming. 
 
