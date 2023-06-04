@@ -1,0 +1,4 @@
+- Avoid words like "we", "lets", etc..
+- Instead use "Do x" or "This guide does X"
+
+- Avoid words like "we'll" in favor for "We will"

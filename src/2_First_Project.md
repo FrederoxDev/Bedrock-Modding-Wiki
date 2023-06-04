@@ -1,6 +1,6 @@
 # 2 - First Project
 
-We will start by setting up a simple "Hello World!" mod, this will help get you introduced into using Visual Studio and c++
+Pages 2 and 2.1 will show you how to make a simple mod to print "Hello World!" to the console, it is recommended that you follow from here, as later pages will be building off of this.  
 
 ## Setting up the project
 Zenova Launcher supplies a [Mod Template](https://github.com/MinecraftZenova/Template), to get started open up a command line and run. This will create a new folder called `Template` in your current directory
