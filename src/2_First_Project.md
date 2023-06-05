@@ -13,6 +13,10 @@ git init
 
 1. Next open up the CMake Gui tool. Next set the source code location to your new `Template` folder, next set the build location to `Template/build` (Make sure to include the full path).
 
+<br />
+
 2. In the bottom left hit configure, set the `Optional platform` to `x64`, and press `Finish` and wait for it to finish.
+
+<br />
 
 3. Next click `Generate` and then `Open Project`, this will then open inside of Visual Studio.

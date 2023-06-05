@@ -8,3 +8,4 @@
     - [Hello World](./2.1_Hello_World.md)
     - [Adding headers](./2.2_Adding_Headers.md)
     - [Intro to Hooking](./2.3_Intro_To_Hooking.md)
+    - [Custom Items](./2.4_Custom_Items.md)

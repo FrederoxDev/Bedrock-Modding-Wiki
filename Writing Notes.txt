@@ -2,3 +2,5 @@
 - Instead use "Do x" or "This guide does X"
 
 - Avoid words like "we'll" in favor for "We will"
+
+- Seperate items in a list with <br />
