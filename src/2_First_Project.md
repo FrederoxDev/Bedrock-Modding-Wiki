@@ -1,22 +1,18 @@
 # 2 - First Project
 
-Pages 2 and 2.1 will show you how to make a simple mod to print "Hello World!" to the console, it is recommended that you follow from here, as later pages will be building off of this.  
+> Chapter 2 will lead you through the basics of "Hooking" functions in ZenovaAPI, as well as by the end you will have your own custom Item. 
 
 ## Setting up the project
-Zenova Launcher supplies a [Mod Template](https://github.com/MinecraftZenova/Template), to get started open up a command line and run. This will create a new folder called `Template` in your current directory
+Open up a powershell instance in the folder in which you want your project folder to be in. Hover over the top right side of the commands below and click `Copy to Clipboard` and paste it into Powershell (not CMD). This will setup your entire project ready to complete the following chapters.
 ```ps
 git clone https://github.com/MinecraftZenova/Template.git
 cd Template
-rmdir /s /q .git
+Remove-Item -Recurse -Force .git
 git init
+(Get-Content CmakeLists.txt).replace("inc)", "Bedrock-Headers/inc)") | Set-Content CMakeLists.txt
+(Get-Content CmakeLists.txt).replace("/maps", "/Bedrock-Headers/maps)") | Set-Content CMakeLists.txt
+git submodule add https://github.com/FrederoxDev/Bedrock-Headers
+Remove-Item -Recurse -Force maps
+cmake . -Bbuild
+start build/Example.sln
 ```
-
-1. Next open up the CMake Gui tool. Next set the source code location to your new `Template` folder, next set the build location to `Template/build` (Make sure to include the full path).
-
-<br />
-
-2. In the bottom left hit configure, set the `Optional platform` to `x64`, and press `Finish` and wait for it to finish.
-
-<br />
-
-3. Next click `Generate` and then `Open Project`, this will then open inside of Visual Studio.
