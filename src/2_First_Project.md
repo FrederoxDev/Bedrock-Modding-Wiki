@@ -15,11 +15,55 @@ $Path = "./resources/assets/manifest.json"
 (Get-Content $Path).replace("uuid1", (New-Guid)) | Set-Content $Path
 (Get-Content $Path).replace("uuid2", (New-Guid)) | Set-Content $Path
 
-cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo . -Bbuild
+cmake . -Bbuild
 start build/Example.sln
 ```
 
+## Configuring Settings
+1. In Visual studio change `Release` to `RelWithDebInfo`
+    
+    ![](./images/2.0_rel_with_deb_info.png)
+
+<br />
+
+2. Next go to the top menubar, and press `Build Solution` under the `Build` tab, or use the shortcut `Ctrl + Shift + B`
+
+    ![](./images/2.0_build_solution.png)
+
+<br />
+
+3. Launch `ZenovaLauncher` (reload if it is already open), and open the settings menu by clicking on the button in the bottom left, and copy the following settings
+
+    ![](./images/2.0_zenova_settings.png)
+
+<br />
+
+4. Go to the `profiles` tab and configure version `1.14.60.5` by pressing the 3 dots on the right side. Finally add `Template Name` to the list of loaded mods
+
+    ![](./images/2.0_configure_profile.png)
+    ![](./images/2.0_loaded_mod.png)
+
 ## Building the Project
-### TODO:
-- Enable settings in ZenovaLauncher
-- What to expect, debug points, err
+
+Whenever you make changes to your project you will need to rebuild the solution with `Ctrl + Shift + B`, or by pressing `Build Solution`. To build the project you need to close all open instances of Minecraft. Simply then launch the game through ZenovaLauncher on your `1.14.60.5` profile.
+
+1. Next you will be prompted to attach a debugger, make sure that your instance of `Visual Studio` is selected and press `OK`.
+
+    ![](./images/2.0_debugger.png)
+
+<br />
+
+2. You will run into two breakpoints in Visual Studio, simply press the `Continue` button. One is from Minecraft and the other one is from ZenovaAPI.
+
+<br />
+
+3. You may run into an error while the game loads, that looks like this. If you get it simply uncheck `Break when this exception type is thrown` as this is not an issue caused by Zenova or your mods, and it can be ignored. Unchecking it will disable this error from pausing the game again. Then simply press the `Continue` button.
+
+    ![](./images/2.0_minecraft_error.png)
+
+<br />
+
+4. If this is the first time building the project, the example mod should print a simple `"Hello World"` into the console
+    ```
+    [Info] [ModStart] Hello World!
+    ```
