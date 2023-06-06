@@ -4,15 +4,22 @@
 
 ## Quick Project Setup
 Open up a powershell instance in the folder in which you want your project folder to be in. Hover over the top right side of the commands below and click `Copy to Clipboard` and paste it into Powershell (not CMD). This will setup your entire project ready to complete the following chapters.
-```ps
-git clone https://github.com/MinecraftZenova/Template.git
-cd Template
+```powershell
+git clone https://github.com/FrederoxDev/Modding-Guide-Template
+cd Modding-Guide-Template
 Remove-Item -Recurse -Force .git
 git init
-(Get-Content CmakeLists.txt).replace("inc)", "Bedrock-Headers/inc)") | Set-Content CMakeLists.txt
-(Get-Content CmakeLists.txt).replace("/maps", "/Bedrock-Headers/maps)") | Set-Content CMakeLists.txt
 git submodule add https://github.com/FrederoxDev/Bedrock-Headers
-Remove-Item -Recurse -Force maps
-cmake . -Bbuild
+
+$Path = "./resources/assets/manifest.json"
+(Get-Content $Path).replace("uuid1", (New-Guid)) | Set-Content $Path
+(Get-Content $Path).replace("uuid2", (New-Guid)) | Set-Content $Path
+
+cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo . -Bbuild
 start build/Example.sln
 ```
+
+## Building the Project
+### TODO:
+- Enable settings in ZenovaLauncher
+- What to expect, debug points, err

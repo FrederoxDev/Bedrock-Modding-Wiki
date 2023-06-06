@@ -2,6 +2,6 @@
 
 > ⭐ Starring the [github repository](https://github.com/FrederoxDev/Bedrock-Modding-Guide) would be highly appreciated, and would help me know the level of interest towards this guide. Best of luck!
 
-This guide assumes that you have existing programming experience, of any language. C++ specific concepts will be explained as part of this guide. If this sounds overwhelming and you still want to follow along, you could watch the introductory videos in [a YouTube Playlist by Cherno on C++](https://www.youtube.com/watch?v=18c3MTX0PK0&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb&pp=iAQB)
+This guide assumes that you have existing programming experience with c++. If this sounds overwhelming and you still want to follow along, you could watch some introductory videos in [a YouTube Playlist by Cherno on C++](https://www.youtube.com/watch?v=18c3MTX0PK0&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb&pp=iAQB)
 
 As a disclaimer, modding bedrock is *hard*, especially if you have no experience in reverse engineering, but don't let that put you down trying. It can be helpful to see many concepts in modding as a "black box", meaning that you have enough knowledge to use them, but without understanding exactly why it works. You can always come back later at a point where you are more used to the concepts to grasp why it works if you want a more deep understanding.
