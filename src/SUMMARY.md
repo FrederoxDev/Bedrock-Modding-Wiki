@@ -8,3 +8,5 @@
     - [Item Registration](./2.2_Register_Items.md)
     - [Item Icons](./2.3_Item_Icons.md)
     - [Overriding functions](./2.4_Overriding_Functions.md)
+
+- [Writing Headers](./3_Writing_Headers.md)

@@ -1,6 +1,6 @@
 # 2 - First Project
 
-> Summary: Chapter 2 will lead you through the basics of `"Hooking"` functions in ZenovaAPI, as well as by the end you will have your own custom Item. Please keep in mind that this section of the guide will be significantly easier then later parts, this is due to the majority of the work for the headers has already been done for you, be prepared for a difficultly increase later on.
+> This chapter will lead you through the basics of `"Hooking"` functions in ZenovaAPI by creating your own custom item. Please keep in mind that this chapter is significantly easier then later sections, since the headers have already been created for you. Be prepared for a difficultly increase later on.
 
 ## Quick Project Setup
 Open up a powershell instance in the folder in which you want your project folder to be in. Hover over the top right side of the commands below and click `Copy to Clipboard` and paste it into Powershell (not CMD). This will setup your entire project ready to complete the following chapters.
@@ -22,34 +22,34 @@ start build/Example.sln
 ## Configuring Settings
 1. In Visual studio change `Release` to `RelWithDebInfo`
     
-    ![](./images/2.0_rel_with_deb_info.png)
+    ![](./images/2.0/rel_with_deb_info.png)
 
 <br />
 
-2. Next go to the top menubar, and press `Build Solution` under the `Build` tab, or use the shortcut `Ctrl + Shift + B`
+2. Next go to the top menubar, and press `Build Solution` under the `Build` tab, or use the shortcut <kbd>Ctrl + Shift + B</kbd>
 
-    ![](./images/2.0_build_solution.png)
+    ![](./images/2.0/build_solution.png)
 
 <br />
 
 3. Launch `ZenovaLauncher` (reload if it is already open), and open the settings menu by clicking on the button in the bottom left, and copy the following settings
 
-    ![](./images/2.0_zenova_settings.png)
+    ![](./images/2.0/zenova_settings.png)
 
 <br />
 
 4. Go to the `profiles` tab and configure version `1.14.60.5` by pressing the 3 dots on the right side. Finally add `Template Name` to the list of loaded mods
 
-    ![](./images/2.0_configure_profile.png)
-    ![](./images/2.0_loaded_mod.png)
+    ![](./images/2.0/configure_profile.png)
+    ![](./images/2.0/loaded_mod.png)
 
 ## Building the Project
 
-Whenever you make changes to your project you will need to rebuild the solution with `Ctrl + Shift + B`, or by pressing `Build Solution`. To build the project you need to close all open instances of Minecraft. Simply then launch the game through ZenovaLauncher on your `1.14.60.5` profile.
+Whenever you make changes to your project you will need to rebuild the solution with <kbd>Ctrl + Shift + B</kbd>, or by pressing `Build Solution`. To build the project you need to close all open instances of Minecraft. Simply then launch the game through ZenovaLauncher on your `1.14.60.5` profile.
 
 1. Next you will be prompted to attach a debugger, make sure that your instance of `Visual Studio` is selected and press `OK`.
 
-    ![](./images/2.0_debugger.png)
+    ![](./images/2.0/debugger.png)
 
 <br />
 
@@ -59,7 +59,7 @@ Whenever you make changes to your project you will need to rebuild the solution 
 
 3. You may run into an error while the game loads, that looks like this. If you get it simply uncheck `Break when this exception type is thrown` as this is not an issue caused by Zenova or your mods, and it can be ignored. Unchecking it will disable this error from pausing the game again. Then simply press the `Continue` button.
 
-    ![](./images/2.0_minecraft_error.png)
+    ![](./images/2.0/minecraft_error.png)
 
 <br />
 
