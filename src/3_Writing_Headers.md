@@ -8,11 +8,11 @@
 
 <br />
 
-2. Next you will need to get the `Windows Client (1.14.60.5)`, however you will already have this installed though ZenovaLauncher if you have followed through the guide. To find it press `Win + R` and enter `%zenova_data%/versions/Minecraft-1.14.60.5/`
+2. Next you will need to get the `Windows Client (1.14.60.5)`, however you will already have this installed though ZenovaLauncher if you have followed through the guide. To find it press <kbd>Win + R</kbd> and enter `%zenova_data%/versions/Minecraft-1.14.60.5/`
 
 <br />
 
-3. Lastly you will need the `Mac Education Client (1.14.70)`, this guide will not tell you how you can get this version. It is important that you get version `1.14.70`, as it contains a greater amount of debug information. Make sure to unzip the `.mdg` file to a folder before analysing, or else you will not be able to select the right file.
+3. Lastly you will need the `Mac Education Client (1.14.70)`, this guide will not tell you how you can get this version. It is important that you get version `1.14.70`, as it contains a DWARF information. Make sure to unzip the `.mdg` file to a folder before analysing, or else you will not be able to find the right file.
 
 ## Analysing in Ghidra
 
@@ -22,7 +22,7 @@ Analysing the files in Ghidra will take a long time, on an i3-1005G1 CPU, it too
 
 <br />
 
-2. Next press <kbd>I</kbd> and locate the file for your version as below:
+2. Next press <kbd>I</kbd> and locate the file for your version
     - Windows Server - `bedrock_server.exe`
     - Windows Client - `Minecraft.Windows.exe`
     - Mac Edu Client - `minecraftpe` 
@@ -33,4 +33,4 @@ Analysing the files in Ghidra will take a long time, on an i3-1005G1 CPU, it too
 
 <br />
 
-4. Leave it to analyse, once done make sure to save the project with <kbd>Ctrl + S</kbd> so that you will not have to analyse it again
+4. Leave it to analyse, once done make sure to save the project with <kbd>Ctrl + S</kbd> so that you will not have to analyse it again.
