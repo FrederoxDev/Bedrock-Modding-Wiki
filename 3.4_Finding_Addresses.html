@@ -1,0 +1,228 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Finding Addresses - Bedrock Modding Guide</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="1.0_Introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="1.1_Required_Tools.html"><strong aria-hidden="true">1.1.</strong> Installing Required tools</a></li></ol></li><li class="chapter-item expanded "><a href="2.0_First_Project.html"><strong aria-hidden="true">2.</strong> First Project</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="2.1_Intro_To_Hooking.html"><strong aria-hidden="true">2.1.</strong> Intro to Hooking</a></li><li class="chapter-item expanded "><a href="2.2_Register_Items.html"><strong aria-hidden="true">2.2.</strong> Item Registration</a></li><li class="chapter-item expanded "><a href="2.3_Item_Icons.html"><strong aria-hidden="true">2.3.</strong> Item Icons</a></li><li class="chapter-item expanded "><a href="2.4_Overriding_Functions.html"><strong aria-hidden="true">2.4.</strong> Overriding functions</a></li></ol></li><li class="chapter-item expanded "><a href="3.0_Writing_Headers.html"><strong aria-hidden="true">3.</strong> Writing Headers</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="3.1_Intro_To_Symbol_Maps.html"><strong aria-hidden="true">3.1.</strong> Intro to Symbol Maps</a></li><li class="chapter-item expanded "><a href="3.2_Function_Delcarations.html"><strong aria-hidden="true">3.2.</strong> Function Declarations</a></li><li class="chapter-item expanded "><a href="3.3_Intro_To_GDB.html"><strong aria-hidden="true">3.3.</strong> Intro to GDB</a></li><li class="chapter-item expanded "><a href="3.4_Finding_Addresses.html" class="active"><strong aria-hidden="true">3.4.</strong> Finding Addresses</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Bedrock Modding Guide</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="34---finding-addresses"><a class="header" href="#34---finding-addresses">3.4 - Finding Addresses</a></h1>
+<p>When finding addresses they all need to be gathered from the <code>1.14.60.5 Windows Client</code>, addresses from other versions <strong>cannot</strong> be used. However the Windows Client does not contain symbols, so to find functions, known details can be compared between the server and client to find where the function is used and gain its address.</p>
+<h2 id="vtable-addresses"><a class="header" href="#vtable-addresses">VTable Addresses</a></h2>
+<p>To use virtual functions on a class you will need to get the address of the vtable, luckily for Minecraft 1.14.60.5 this is an easy task. To get started locate the <code>vtable</code> for your class on the <code>Windows Client</code> and open it on the listing view. The address you will need will be the first address in the vtable, and is highlighted in yellow in the image below.</p>
+<p><img src="./images/3.4/vtable_address.png" alt="" /></p>
+<h2 id="finding-functions"><a class="header" href="#finding-functions">Finding Functions</a></h2>
+<blockquote>
+<p>To find addresses for non virtual functions, it will take alot more work and time. These are different methods you can use to locate the function, however they can all be used with eachother to locate your function.</p>
+</blockquote>
+<ul>
+<li>
+<h3 id="cross-referencing-strings"><a class="header" href="#cross-referencing-strings">Cross-Referencing Strings</a></h3>
+<ol>
+<li>If a function contains a string on the <code>Windows Server</code>, you can copy the string and on the <code>Windows Client</code> press <kbd>S</kbd> or <code>Search &gt; Memory</code>. Next set the <code>Format</code> to <code>String</code> and enter the string into the <code>Search Value</code> and press <code>Search All</code>.</li>
+</ol>
+<br />
+<ol start="2">
+<li>
+<p>This will then bring up a list of strings which contain that string, search through the list to locate the string with the identical name and click on it to jump to it in the <code>Listing</code> window.</p>
+<p><img src="./images/3.4/string_client.png" alt="" /></p>
+<p><img src="./images/3.4/string_server.png" alt="" /></p>
+</li>
+</ol>
+<br />
+<ol start="3">
+<li>In this example there is only one function, which means that <code>FUN_01876c50</code> is <code>_mapToBlock</code>. Now in Ghidra copy the name on the client (<code>FUN_01876c50</code>), and press <kbd>G</kbd> or <code>Navigation &gt; Go To</code>, this will take you to the very top of the function so you do not have to scroll. Next right click on the function name and select <code>Edit Function</code> and change the name of the function to the one on the Server.</li>
+</ol>
+<br />
+<ol start="4">
+<li>If there were multiple XRefs, you will have to check each function and compare more details between the Client and Server to find the correct one. </li>
+</ol>
+</li>
+</ul>
+<h2 id="getting-the-function-address"><a class="header" href="#getting-the-function-address">Getting the Function Address</a></h2>
+<p>Once you have found your function on the Client, the address will be the address of the first instruction and is highlighted in yellow in the image below.</p>
+<p><img src="./images/3.4/function_address.png" alt="" /></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="3.3_Intro_To_GDB.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="3.3_Intro_To_GDB.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

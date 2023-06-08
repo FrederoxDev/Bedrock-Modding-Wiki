@@ -1,0 +1,272 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>First Project - Bedrock Modding Guide</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="1.0_Introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="1.1_Required_Tools.html"><strong aria-hidden="true">1.1.</strong> Installing Required tools</a></li></ol></li><li class="chapter-item expanded "><a href="2.0_First_Project.html" class="active"><strong aria-hidden="true">2.</strong> First Project</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="2.1_Intro_To_Hooking.html"><strong aria-hidden="true">2.1.</strong> Intro to Hooking</a></li><li class="chapter-item expanded "><a href="2.2_Register_Items.html"><strong aria-hidden="true">2.2.</strong> Item Registration</a></li><li class="chapter-item expanded "><a href="2.3_Item_Icons.html"><strong aria-hidden="true">2.3.</strong> Item Icons</a></li><li class="chapter-item expanded "><a href="2.4_Overriding_Functions.html"><strong aria-hidden="true">2.4.</strong> Overriding functions</a></li></ol></li><li class="chapter-item expanded "><a href="3.0_Writing_Headers.html"><strong aria-hidden="true">3.</strong> Writing Headers</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="3.1_Intro_To_Symbol_Maps.html"><strong aria-hidden="true">3.1.</strong> Intro to Symbol Maps</a></li><li class="chapter-item expanded "><a href="3.2_Function_Delcarations.html"><strong aria-hidden="true">3.2.</strong> Function Declarations</a></li><li class="chapter-item expanded "><a href="3.3_Intro_To_GDB.html"><strong aria-hidden="true">3.3.</strong> Intro to GDB</a></li><li class="chapter-item expanded "><a href="3.4_Finding_Addresses.html"><strong aria-hidden="true">3.4.</strong> Finding Addresses</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Bedrock Modding Guide</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="2---first-project"><a class="header" href="#2---first-project">2 - First Project</a></h1>
+<blockquote>
+<p>This chapter will lead you through the basics of <code>&quot;Hooking&quot;</code> functions in ZenovaAPI by creating your own custom item. Please keep in mind that this chapter is significantly easier then later sections, since the headers have already been created for you. Be prepared for a difficultly increase later on.</p>
+</blockquote>
+<h2 id="quick-project-setup"><a class="header" href="#quick-project-setup">Quick Project Setup</a></h2>
+<p>Open up a powershell instance in the folder in which you want your project folder to be in. Hover over the top right side of the commands below and click <code>Copy to Clipboard</code> and paste it into <strong>Powershell (not CMD)</strong>. This will setup your entire project ready to complete the following chapters.</p>
+<pre><code class="language-powershell">git clone https://github.com/FrederoxDev/Modding-Guide-Template
+cd Modding-Guide-Template
+Remove-Item -Recurse -Force .git
+git init
+git submodule add https://github.com/FrederoxDev/Bedrock-Headers
+
+$Path = &quot;./resources/assets/manifest.json&quot;
+(Get-Content $Path).replace(&quot;uuid1&quot;, (New-Guid)) | Set-Content $Path
+(Get-Content $Path).replace(&quot;uuid2&quot;, (New-Guid)) | Set-Content $Path
+
+cmake . -Bbuild
+start build/Example.sln
+</code></pre>
+<h2 id="configuring-settings"><a class="header" href="#configuring-settings">Configuring Settings</a></h2>
+<ol>
+<li>
+<p>In Visual studio change <code>Release</code> to <code>RelWithDebInfo</code></p>
+<p><img src="./images/2.0/rel_with_deb_info.png" alt="" /></p>
+</li>
+</ol>
+<br />
+<ol start="2">
+<li>
+<p>Next go to the top menubar, and press <code>Build Solution</code> under the <code>Build</code> tab, or use the shortcut <kbd>Ctrl + Shift + B</kbd></p>
+<p><img src="./images/2.0/build_solution.png" alt="" /></p>
+</li>
+</ol>
+<br />
+<ol start="3">
+<li>
+<p>Launch <code>ZenovaLauncher</code> (reload if it is already open), and open the settings menu by clicking on the button in the bottom left, and copy the following settings</p>
+<p><img src="./images/2.0/zenova_settings.png" alt="" /></p>
+</li>
+</ol>
+<br />
+<ol start="4">
+<li>
+<p>Go to the <code>profiles</code> tab and configure version <code>1.14.60.5</code> by pressing the 3 dots on the right side. Finally add <code>Template Name</code> to the list of loaded mods</p>
+<p><img src="./images/2.0/configure_profile.png" alt="" />
+<img src="./images/2.0/loaded_mod.png" alt="" /></p>
+</li>
+</ol>
+<h2 id="building-the-project"><a class="header" href="#building-the-project">Building the Project</a></h2>
+<p>Whenever you make changes to your project you will need to rebuild the solution with <kbd>Ctrl + Shift + B</kbd>, or by pressing <code>Build Solution</code>. To build the project you need to close all open instances of Minecraft. Simply then launch the game through ZenovaLauncher on your <code>1.14.60.5</code> profile.</p>
+<ol>
+<li>
+<p>Next you will be prompted to attach a debugger, make sure that your instance of <code>Visual Studio</code> is selected and press <code>OK</code>.</p>
+<p><img src="./images/2.0/debugger.png" alt="" /></p>
+</li>
+</ol>
+<br />
+<ol start="2">
+<li>You will run into two breakpoints in Visual Studio, simply press the <code>Continue</code> button. One is from Minecraft and the other one is from ZenovaAPI.</li>
+</ol>
+<br />
+<ol start="3">
+<li>
+<p>You may run into an error while the game loads, that looks like this. If you get it simply uncheck <code>Break when this exception type is thrown</code> as this is not an issue caused by Zenova or your mods, and it can be ignored. Unchecking it will disable this error from pausing the game again. Then simply press the <code>Continue</code> button.</p>
+<p><img src="./images/2.0/minecraft_error.png" alt="" /></p>
+</li>
+</ol>
+<br />
+<ol start="4">
+<li>If this is the first time building the project, the example mod should print a simple <code>&quot;Hello World&quot;</code> into the console
+<pre><code>[Info] [ModStart] Hello World!
+</code></pre>
+</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="1.1_Required_Tools.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="2.1_Intro_To_Hooking.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="1.1_Required_Tools.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="2.1_Intro_To_Hooking.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,694 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Bedrock Modding Guide</title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="1.0_Introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="1.1_Required_Tools.html"><strong aria-hidden="true">1.1.</strong> Installing Required tools</a></li></ol></li><li class="chapter-item expanded "><a href="2.0_First_Project.html"><strong aria-hidden="true">2.</strong> First Project</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="2.1_Intro_To_Hooking.html"><strong aria-hidden="true">2.1.</strong> Intro to Hooking</a></li><li class="chapter-item expanded "><a href="2.2_Register_Items.html"><strong aria-hidden="true">2.2.</strong> Item Registration</a></li><li class="chapter-item expanded "><a href="2.3_Item_Icons.html"><strong aria-hidden="true">2.3.</strong> Item Icons</a></li><li class="chapter-item expanded "><a href="2.4_Overriding_Functions.html"><strong aria-hidden="true">2.4.</strong> Overriding functions</a></li></ol></li><li class="chapter-item expanded "><a href="3.0_Writing_Headers.html"><strong aria-hidden="true">3.</strong> Writing Headers</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="3.1_Intro_To_Symbol_Maps.html"><strong aria-hidden="true">3.1.</strong> Intro to Symbol Maps</a></li><li class="chapter-item expanded "><a href="3.2_Function_Delcarations.html"><strong aria-hidden="true">3.2.</strong> Function Declarations</a></li><li class="chapter-item expanded "><a href="3.3_Intro_To_GDB.html"><strong aria-hidden="true">3.3.</strong> Intro to GDB</a></li><li class="chapter-item expanded "><a href="3.4_Finding_Addresses.html"><strong aria-hidden="true">3.4.</strong> Finding Addresses</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Bedrock Modding Guide</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="1---introduction"><a class="header" href="#1---introduction">1 - Introduction</a></h1>
+<blockquote>
+<p>⭐ Starring the <a href="https://github.com/FrederoxDev/Bedrock-Modding-Guide">github repository</a> would be highly appreciated, and would help me know the level of interest towards this guide. Best of luck!</p>
+</blockquote>
+<p>This guide assumes that you have existing programming experience with c++. If this sounds overwhelming and you still want to follow along, you could watch some introductory videos in <a href="https://www.youtube.com/watch?v=18c3MTX0PK0&amp;list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb&amp;pp=iAQB">a YouTube Playlist by Cherno on C++</a></p>
+<p>As a disclaimer, modding bedrock is <em>hard</em>, especially if you have no experience in reverse engineering, but don't let that put you down trying. It can be helpful to see many concepts in modding as a &quot;black box&quot;, meaning that you have enough knowledge to use them, but without understanding exactly why it works. You can always come back later at a point where you are more used to the concepts to grasp why it works if you want a more deep understanding.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="11---required-tools"><a class="header" href="#11---required-tools">1.1 - Required tools</a></h1>
+<p>TODO: Rewrite this..</p>
+<!-- ## Git
+- Download Link: [git-scm.com](https://git-scm.com/downloads)
+- In this guide, many resources have been hosted on GitHub. It is recommended that you have the `git` command line tool installed.
+
+## Visual Studio Community
+- Download Link: [visualstudio.microsoft.com/vs/community/](https://visualstudio.microsoft.com/vs/community/)
+- Visual Studio Community will be used as the editor for writing c++ code, you can download it here. 
+- Make sure to select C++ support inside of the installer.
+![](./images/1.1_cpp_option.png)
+
+## Ghidra
+- Download Link: [ghidra-sre.org](https://ghidra-sre.org/)
+- Ghidra will be used to reverse-engineer and analyse Minecraft
+
+## ZenovaLauncher
+- Download Link: [github.com/MinecraftZenova/ZenovaLauncher](https://github.com/MinecraftZenova/ZenovaLauncher)
+
+## Zenova
+- Please follow all of the pre-requisites for Zenova here: [https://github.com/MinecraftZenova/Template#prerequisites](https://github.com/MinecraftZenova/Template#prerequisites) -->
+<div style="break-before: page; page-break-before: always;"></div><h1 id="2---first-project"><a class="header" href="#2---first-project">2 - First Project</a></h1>
+<blockquote>
+<p>This chapter will lead you through the basics of <code>&quot;Hooking&quot;</code> functions in ZenovaAPI by creating your own custom item. Please keep in mind that this chapter is significantly easier then later sections, since the headers have already been created for you. Be prepared for a difficultly increase later on.</p>
+</blockquote>
+<h2 id="quick-project-setup"><a class="header" href="#quick-project-setup">Quick Project Setup</a></h2>
+<p>Open up a powershell instance in the folder in which you want your project folder to be in. Hover over the top right side of the commands below and click <code>Copy to Clipboard</code> and paste it into <strong>Powershell (not CMD)</strong>. This will setup your entire project ready to complete the following chapters.</p>
+<pre><code class="language-powershell">git clone https://github.com/FrederoxDev/Modding-Guide-Template
+cd Modding-Guide-Template
+Remove-Item -Recurse -Force .git
+git init
+git submodule add https://github.com/FrederoxDev/Bedrock-Headers
+
+$Path = &quot;./resources/assets/manifest.json&quot;
+(Get-Content $Path).replace(&quot;uuid1&quot;, (New-Guid)) | Set-Content $Path
+(Get-Content $Path).replace(&quot;uuid2&quot;, (New-Guid)) | Set-Content $Path
+
+cmake . -Bbuild
+start build/Example.sln
+</code></pre>
+<h2 id="configuring-settings"><a class="header" href="#configuring-settings">Configuring Settings</a></h2>
+<ol>
+<li>
+<p>In Visual studio change <code>Release</code> to <code>RelWithDebInfo</code></p>
+<p><img src="./images/2.0/rel_with_deb_info.png" alt="" /></p>
+</li>
+</ol>
+<br />
+<ol start="2">
+<li>
+<p>Next go to the top menubar, and press <code>Build Solution</code> under the <code>Build</code> tab, or use the shortcut <kbd>Ctrl + Shift + B</kbd></p>
+<p><img src="./images/2.0/build_solution.png" alt="" /></p>
+</li>
+</ol>
+<br />
+<ol start="3">
+<li>
+<p>Launch <code>ZenovaLauncher</code> (reload if it is already open), and open the settings menu by clicking on the button in the bottom left, and copy the following settings</p>
+<p><img src="./images/2.0/zenova_settings.png" alt="" /></p>
+</li>
+</ol>
+<br />
+<ol start="4">
+<li>
+<p>Go to the <code>profiles</code> tab and configure version <code>1.14.60.5</code> by pressing the 3 dots on the right side. Finally add <code>Template Name</code> to the list of loaded mods</p>
+<p><img src="./images/2.0/configure_profile.png" alt="" />
+<img src="./images/2.0/loaded_mod.png" alt="" /></p>
+</li>
+</ol>
+<h2 id="building-the-project"><a class="header" href="#building-the-project">Building the Project</a></h2>
+<p>Whenever you make changes to your project you will need to rebuild the solution with <kbd>Ctrl + Shift + B</kbd>, or by pressing <code>Build Solution</code>. To build the project you need to close all open instances of Minecraft. Simply then launch the game through ZenovaLauncher on your <code>1.14.60.5</code> profile.</p>
+<ol>
+<li>
+<p>Next you will be prompted to attach a debugger, make sure that your instance of <code>Visual Studio</code> is selected and press <code>OK</code>.</p>
+<p><img src="./images/2.0/debugger.png" alt="" /></p>
+</li>
+</ol>
+<br />
+<ol start="2">
+<li>You will run into two breakpoints in Visual Studio, simply press the <code>Continue</code> button. One is from Minecraft and the other one is from ZenovaAPI.</li>
+</ol>
+<br />
+<ol start="3">
+<li>
+<p>You may run into an error while the game loads, that looks like this. If you get it simply uncheck <code>Break when this exception type is thrown</code> as this is not an issue caused by Zenova or your mods, and it can be ignored. Unchecking it will disable this error from pausing the game again. Then simply press the <code>Continue</code> button.</p>
+<p><img src="./images/2.0/minecraft_error.png" alt="" /></p>
+</li>
+</ol>
+<br />
+<ol start="4">
+<li>If this is the first time building the project, the example mod should print a simple <code>&quot;Hello World&quot;</code> into the console
+<pre><code>[Info] [ModStart] Hello World!
+</code></pre>
+</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="21---intro-to-hooking"><a class="header" href="#21---intro-to-hooking">2.1 - Intro to Hooking</a></h1>
+<blockquote>
+<p>To begin creating code to interact with Minecraft, a concept called <code>Hooking</code> can be used. Hooking allows code to be injected before or after existing functions, as well as being able to get the parameters passed to the function, and modify what is passed to the actual function.</p>
+</blockquote>
+<h2 id="hooks-in-zenova"><a class="header" href="#hooks-in-zenova">Hooks in Zenova</a></h2>
+<p>First of all, ZenovaAPI provides two types of Hooks:</p>
+<ul>
+<li><code>Zenova_Hook</code> - used to hook static and member functions</li>
+<li><code>Zenova_VHook</code> - used to hook virtual functions</li>
+</ul>
+<p>To begin this guide will show you how to modify the behaviour of hovering over items. Firstly add an include to the item header as shown below:</p>
+<pre><code class="language-h">#include &quot;Minecraft/Items/Item.h&quot;
+</code></pre>
+<blockquote>
+<p>Tip: You can open up the header file by holding down <kbd>Ctrl</kbd> and clicking on the file path. Inside you can see all of the virtual functions that are used by the Item class. Specifically to modify the behaviour for hovering over items, you would hook <code>appendFormattedHovertext</code>.</p>
+</blockquote>
+<p>Navigate to <code>appendFormattedHoverText</code> in <code>Minecraft/Items/Item.h</code></p>
+<pre><code class="language-h">virtual void appendFormattedHovertext(const ItemStackBase&amp;, Level&amp;, std::string&amp;, const bool) const;
+</code></pre>
+<h2 id="defining-a-hook"><a class="header" href="#defining-a-hook">Defining a hook</a></h2>
+<ol>
+<li>Firstly a &quot;trampoline&quot; is needed, a trampoline is a function containing a copy of the original functions code. As <code>appendFormattedHoverText</code> is a <code>virtual</code> function, the first parameter passed will be a pointer to the class, in this case <code>Item</code>. Next it needs to take in all of the arguments of the original function.</li>
+</ol>
+<pre><code class="language-h">inline static void (*_appendFormattedHoverText)(Item*, const ItemStackBase&amp;, Level&amp;, std::string&amp;, const bool);
+</code></pre>
+<br />
+<ol start="2">
+<li>To make the hook, firstly copy the parameters of your trampoline, next you will need to give each argument an identifier. In this hook it is calling the &quot;trampoline&quot; function, but it is also printing <code>&quot;Hook called!&quot;</code> into the console.</li>
+</ol>
+<pre><code class="language-h">static void appendFormattedHoverText(Item* item, const ItemStackBase&amp; itemBase, Level&amp; level, std::string&amp; hoverText, const bool showCategory) 
+{
+    // Call the original piece of code so it still behaves like normal
+    _appendFormattedHoverText(item, itemBase, level, hoverText, showCategory);
+
+    // Print to console to test if it is working
+    Zenova_Info(&quot;Hook called!&quot;);
+}
+</code></pre>
+<br />
+<ol start="3">
+<li>Next you need to tell ZenovaAPI to hook the function using <code>Zenova_VHook</code>. To test it, build the project and hover over any items in your inventory, the hovering should still work with normal behaviour, but it will also be flooding the console with messages!</li>
+</ol>
+<pre><code class="language-h">MOD_FUNCTION void ModStart() 
+{
+    Zenova_VHook(Item, appendFormattedHoverText, &amp;appendFormattedHoverText, &amp;_appendFormattedHoverText);
+}
+</code></pre>
+<br />
+<ol start="4">
+<li>Calling the trampoline is not actually mandatory, here it has been removed and the hoverText has been set to a constant value of <code>&quot;Hello World!&quot;</code></li>
+</ol>
+<pre><code class="language-h">static void appendFormattedHoverText(Item* item, const ItemStackBase&amp; itemBase, Level&amp; level, std::string&amp; hoverText, const bool showCategory) 
+{
+    hoverText = &quot;Hello World!&quot;;
+}
+</code></pre>
+<br />
+<p><img src="./images/2.1/hello_world.png" alt="" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="22---registering-items"><a class="header" href="#22---registering-items">2.2 - Registering Items</a></h1>
+<p>Firstly replace your code in <code>src/Example.cpp</code> with this, as it will be build upon throughout this page.</p>
+<pre><code class="language-cpp">#include &quot;Zenova.h&quot;
+#include &quot;generated/initcpp.h&quot;
+#include &quot;Minecraft/Items/VanillaItems.h&quot;
+#include &quot;Minecraft/Items/Item.h&quot;
+#include &quot;Minecraft/Items/ItemRegistry.h&quot;
+
+MOD_FUNCTION void ModStart() {}
+</code></pre>
+<h2 id="vanillaitemsregisteritems"><a class="header" href="#vanillaitemsregisteritems">VanillaItems::registerItems</a></h2>
+<ol>
+<li>When registering an item, you will need to hook into the <code>VanillaItems::registerItems</code> function. Navigate to <code>registerItems</code> in <code>Minecraft/Items/VanillaItems.h</code></li>
+</ol>
+<pre><code class="language-cpp">static void registerItems(bool);
+</code></pre>
+<br />
+<ol start="2">
+<li>Next as this is a static function, the hook and trampoline only need to have the parameters from <code>registerItems</code>, unline VHook which also took the class as a pointer. Try to define them yourself first, and then compare against the example</li>
+</ol>
+<pre><code class="language-cpp">// Hover and select the eye to reveal the solution
+<span class="boring">inline static void (*_registerItems)(bool);
+</span><span class="boring">static void registerItems(bool flag) 
+</span><span class="boring">{
+</span><span class="boring">    // Call the trampoline so that minecraft can register its own items first
+</span><span class="boring">    _registerItems(flag);
+</span><span class="boring">
+</span><span class="boring">    // Print to console to see when it is called
+</span><span class="boring">    Zenova_Info(&quot;registerItems&quot;);
+</span><span class="boring">}
+</span></code></pre>
+<br />
+<ol start="3">
+<li>Add the hook to your <code>ModStart</code> function. Try to do this yourself and then reveal the hidden code. After this, build your project and open a world, it will show that <code>registerItems</code> is only called during the world load, and not when the game is opened.</li>
+</ol>
+<pre><code class="language-cpp">// Hover and select the eye to reveal the solution
+<span class="boring">MOD_FUNCTION void ModStart() 
+</span><span class="boring">{
+</span><span class="boring">	Zenova_Hook(VanillaItems::registerItems, &amp;registerItems, &amp;_registerItems);
+</span><span class="boring">}
+</span></code></pre>
+<br />
+<ol start="4">
+<li>Now modify your hook for <code>registerItems</code>, to register an individual item you can use <code>ItemRegistry::registerItem</code> after calling the trampoline function. <code>registerItem</code> takes in a generic type, for now use the <code>Item</code> class. Additionally it takes in a <code>const std::string&amp;</code> for the identifier of the item and also a <code>short</code> for the item number id.</li>
+</ol>
+<pre><code class="language-cpp">static void registerItems(bool flag)
+{
+	_registerItems(flag);
+	ItemRegistry::registerItem&lt;Item&gt;(&quot;guide:test_item&quot;, ItemRegistry::getMaxItemID());
+}
+</code></pre>
+<br />
+<ol start="5">
+<li>Build the project and open a world, open the chat and run <code>/give @s guide:test_item</code>. The item should show up in the list however it will not have an icon yet</li>
+</ol>
+<p><img src="./images/2.2/missing_icon.png" alt="" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="23---item-icons"><a class="header" href="#23---item-icons">2.3 - Item Icons</a></h1>
+<ol>
+<li>Firstly create a hook for <code>VanillaItems::initClientData</code>. This is where items need to register their icons. </li>
+</ol>
+<pre><code class="language-cpp">inline static void (*_initClientData)();
+static void initClientData()
+{
+    _initClientData();
+}
+</code></pre>
+<pre><code class="language-cpp">MOD_FUNCTION void ModStart() 
+{
+	Zenova_Hook(VanillaItems::registerItems, &amp;registerItems, &amp;_registerItems);
+	Zenova_Hook(VanillaItems::initClientData, &amp;initClientData, &amp;_initClientData);
+}
+</code></pre>
+<br />
+<ol start="2">
+<li>If you look through the <code>Item</code> class header, you will find two virtual functions which are called <code>setIcon</code>, this is the function needed to set the icon. As the <code>setIcon</code> function needs to be called inside of the <code>initClientData</code> hook, there needs to be a way to reference the item to call that function on. Hover over the <code>ItemRegistry::registerItem</code> function, and you will see it returns a <code>WeakPtr&lt;Item&gt;</code>. Firstly define a new variable in <code>src/Example.cpp</code> and modify the line where the item is registered to assign <code>testItem</code> to the returned value.</li>
+</ol>
+<pre><code class="language-cpp">inline static WeakPtr&lt;Item&gt; testItem;
+</code></pre>
+<pre><code class="language-cpp">static void registerItems(bool flag)
+{
+	_registerItems(flag);
+	testItem = ItemRegistry::registerItem&lt;Item&gt;(&quot;guide:test_item&quot;, ItemRegistry::getMaxItemID());
+}
+</code></pre>
+<br />
+<ol start="3">
+<li>Now inside of the <code>initClientData</code> hook, use the arrow operator <code>-&gt;</code> to call the member function <code>setIcon</code> on <code>testItem</code>. The function takes in the texture identifier, in this case <code>&quot;diamond&quot;</code> and also the frame, in this case pass <code>0</code></li>
+</ol>
+<pre><code class="language-cpp">static void initClientData()
+{
+	_initClientData();
+	testItem-&gt;setIcon(&quot;diamond&quot;, 0);
+}
+</code></pre>
+<h2 id="creating-an-icon"><a class="header" href="#creating-an-icon">Creating an Icon</a></h2>
+<ol>
+<li>Next inside of <code>resources/assets/textures/item_textures.json</code> create a new object in <code>&quot;texture_data&quot;</code> called <code>&quot;guide:test_item&quot;</code>, this will be the identifier for your icon. Inside of that object create a key, <code>&quot;textures&quot;</code> with the value <code>&quot;textures/items/test_item&quot;</code> which is the path to the texture for the icon.</li>
+</ol>
+<pre><code class="language-json">{
+	&quot;resource_pack_name&quot;: &quot;resourcePack.addon.name&quot;,
+	&quot;texture_name&quot;: &quot;atlas.items&quot;,
+	&quot;texture_data&quot;: {
+		&quot;guide:test_item&quot;: {
+			&quot;textures&quot;: &quot;textures/items/test_item&quot;
+		}
+	}
+}
+</code></pre>
+<br />
+<ol start="2">
+<li>Next inside of <code>resources/assets/textures/items/</code> place any <code>16x16</code> pixel texture with the name <code>test_item.png</code>. Now in your hook for <code>initClientData</code> in <code>src/Example.cpp</code>, replace the identifier <code>&quot;diamond&quot;</code> to <code>&quot;guide:test_item&quot;</code></li>
+</ol>
+<pre><code class="language-cpp">static void initClientData()
+{
+	_initClientData();
+	testItem-&gt;setIcon(&quot;guide:test_item&quot;, 0);
+}
+</code></pre>
+<h2 id="item-name"><a class="header" href="#item-name">Item Name</a></h2>
+<ol>
+<li>Inside of <code>resources/assets/texts/en_US.lang</code> add a line, which minecraft will use for your Items name.</li>
+</ol>
+<pre><code>item.guide:test_item.name=Test Item
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="24---overriding-functions"><a class="header" href="#24---overriding-functions">2.4 - Overriding functions</a></h1>
+<p>On page 2.2, this guide showed you how to replace a virtual function for <em>all</em> Items using <code>Hooks</code>. But how could this be achieved for an individual custom item? To do this you can create a class which inherits from the <code>Item</code> class, firstly create a new class in <code>src/Example.cpp</code> called <code>TestItem</code> and declare a public constructor which calls the <code>Item</code> constructor.</p>
+<pre><code class="language-cpp">class TestItem : public Item {
+public:
+	TestItem(const std::string&amp; name, short id) : Item(name, id) {}
+};
+</code></pre>
+<br />
+<p>To override a <code>virtual</code> function in c++ simply create a function with the same parameters and name inside of the <code>TestItem</code> class. Like on page 2.2, this page will show you how to replace the functionality for hovering over the item by replacing it with a constant value of <code>&quot;Hello World!&quot;</code>.</p>
+<pre><code class="language-cpp"><span class="boring">class TestItem : public Item {
+</span><span class="boring">public:
+</span><span class="boring">	TestItem(const std::string&amp; name, short id) : Item(name, id) {}
+</span><span class="boring">
+</span>	virtual void appendFormattedHovertext(const ItemStackBase&amp;, Level&amp;, std::string&amp; hoverText, const bool) const 
+	{
+		hoverText = &quot;Hello World!&quot;;
+	};
+<span class="boring">};
+</span></code></pre>
+<br />
+<p>In your constructor for the <code>TestItem</code> class you could also call other functions, for example if you wanted to set the stack size you could call <code>setMaxStackSize</code>:</p>
+<pre><code class="language-cpp"><span class="boring">class TestItem : public Item {
+</span><span class="boring">public:
+</span>	TestItem(const std::string&amp; name, short id) : Item(name, id) {
+		setMaxStackSize(1);
+	}
+<span class="boring">
+</span><span class="boring">	virtual void appendFormattedHovertext(const ItemStackBase&amp;, Level&amp;, std::string&amp; hoverText, const bool) const 
+</span><span class="boring">	{
+</span><span class="boring">		hoverText = &quot;Hello World!&quot;;
+</span><span class="boring">	};
+</span><span class="boring">};
+</span></code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="3---writing-headers"><a class="header" href="#3---writing-headers">3 - Writing Headers</a></h1>
+<blockquote>
+<p>Writing headers will be a difficult topic as it is very different to programming. The end goal is to replicate the headers of Minecraft with the right size and order so that it is represented in Memory the same.</p>
+</blockquote>
+<h2 id="pre-requisites"><a class="header" href="#pre-requisites">Pre-requisites</a></h2>
+<ol>
+<li>You will need to get the <code>Windows Server (1.14.60.5)</code> and the <code>Linux Server (1.14.60.5)</code>, you can download an archived version from the <a href="https://minecraft.fandom.com/wiki/Bedrock_Dedicated_Server_1.14.60.5">Minecraft Fandom page</a>.</li>
+</ol>
+<br />
+<ol start="2">
+<li>Next you will need to get the <code>Windows Client (1.14.60.5)</code>, however you will already have this installed though ZenovaLauncher if you have followed through the guide. To find it press <kbd>Win + R</kbd> and enter <code>%zenova_data%/versions/Minecraft-1.14.60.5/</code></li>
+</ol>
+<br />
+<ol start="3">
+<li>Lastly you will need the <code>Mac Education Client (1.14.70)</code>, this guide will not tell you how you can get this version. It is important that you get version <code>1.14.70</code>, as it contains a DWARF information. Make sure to unzip the <code>.dmg</code> file to a folder before analysing, or else you will not be able to find the right file.</li>
+</ol>
+<h2 id="analysing-in-ghidra"><a class="header" href="#analysing-in-ghidra">Analysing in Ghidra</a></h2>
+<p>Analysing the files in Ghidra will take a long time, on an i3-1005G1 CPU, it took roughly 6 hours to analyse each version. Although you only will need to analyse 3 of the 4 versions, as you <strong>do not need</strong> to analyse the <code>Linux Server</code>. Follow the next steps for one version at a time.</p>
+<ol>
+<li>Open Ghidra and select <code>File &gt; New Project</code>, next select <code>Non-Shared Project</code> and enter an clearly labeled name for the version you are analysing. </li>
+</ol>
+<br />
+<ol start="2">
+<li>Next press <kbd>I</kbd> and locate the file for your version
+<ul>
+<li>Windows Server - <code>bedrock_server.exe</code></li>
+<li>Windows Client - <code>Minecraft.Windows.exe</code></li>
+<li>Mac Edu Client - <code>minecraftpe</code> </li>
+</ul>
+</li>
+</ol>
+<br />
+<ol start="3">
+<li>After you have imported the right file, double click it in the <code>Active Project</code> tab to open it in the <code>CodeBrowser</code>. It will then prompt you to <code>Auto-Analyse</code> the file, press <code>OK</code> and leave the default settings and confirm again. Close any open ghidra windows by pressing the black X in the top right corner, this will decrease the amount of work that Ghidra has to do.</li>
+</ol>
+<br />
+<ol start="4">
+<li>Leave it to analyse, once done make sure to save the project with <kbd>Ctrl + S</kbd> so that you will not have to analyse it again.</li>
+</ol>
+<h2 id="frederoxdevbedrock-ghidrascripts"><a class="header" href="#frederoxdevbedrock-ghidrascripts">FrederoxDev/Bedrock-GhidraScripts</a></h2>
+<p>To try and automate as much as possible, scripts have been written which can automatically generate the large majority of the header files. To install them run the following commands in <strong>PowerShell (Not CMD)</strong></p>
+<pre><code class="language-powershell">cd &quot;$env:USERPROFILE\ghidra_scripts&quot;
+git clone https://github.com/FrederoxDev/Bedrock-GhidraScripts.git .
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="31---intro-to-symbol-maps"><a class="header" href="#31---intro-to-symbol-maps">3.1 - Intro to Symbol Maps</a></h1>
+<p>When writing code which interacts with Minecraft, ZenovaAPI needs to know where the code is in memory to be able to call it. To provide these adresses Zenova uses <code>Symbol Maps</code>, which are just made from <code>.json</code> files. Here is the schema for a Symbol Map in TS</p>
+<pre><code class="language-ts">type Address = string; // e.g. '0x123456'
+type MangledSymbol = string; // e.g. '?exampleSymbol@..'
+type HeaderFilePath = string; // e.g. 'Minecraft/Items/Item.h'
+type ClassName = string; // e.g. 'Item'
+type VariableString = string; // e.g. 'bool&amp; Item::mInCreativeGroup'
+
+interface SymbolMap {
+    includes?: HeaderFilePath[],
+    functions?: Function[],
+    vtable?: VTable[],
+    variables?: Variable[] 
+};
+
+interface Function {
+    name: MangledSymbol,
+    address: Address
+};
+
+interface VTable {
+    name: ClassName,
+    parent?: ClassName | ClassName[],
+    address: Address | Address[],
+    functions: MangledSymbol[]
+};
+
+interface Variable {
+    [key: VariableString]: Address
+};
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="32---function-declarations"><a class="header" href="#32---function-declarations">3.2 - Function Declarations</a></h1>
+<h2 id="extracting-vtable-order"><a class="header" href="#extracting-vtable-order">Extracting Vtable Order</a></h2>
+<ol>
+<li>
+<p>To get started, locate the class you want to generate a header for inside of the <code>Mac Education Client</code> in the <code>SymbolTree</code> window and select the <code>vtable</code>. </p>
+<p><img src="./images/3.2/vtable_symbol.png" alt="" /></p>
+</li>
+</ol>
+<br />
+<ol start="2">
+<li>
+<p>Next locate the first function address in the Vtable, and copy it to a notepad file. The image below shows the first address highlighted in yellow (<code>1035d5d90</code>)</p>
+<p><img src="./images/3.2/first_address.png" alt="" /></p>
+</li>
+</ol>
+<br />
+<ol start="3">
+<li>
+<p>Next locate the last function address in the Vtable by scrolling downwards and again copy it to a notepad file. The image below shows the last address highlighted in yellow (<code>1035d60b0</code>)</p>
+<p><img src="./images/3.2/last_address.png" alt="" /></p>
+</li>
+</ol>
+<br />
+<ol start="4">
+<li>In the <code>ScriptManager</code> window in Ghidra, open the <code>Bedrock</code> category and run the script <code>ExtractVtableOrder.py</code>. Enter all details it prompts you for.</li>
+</ol>
+<h2 id="generating-c-header"><a class="header" href="#generating-c-header">Generating C++ Header</a></h2>
+<ol>
+<li>To get started open up your Ghidra Project for the <code>Windows Server</code>. Next open the <code>ScriptManager</code> and run <code>GenerateHeader.py</code> in the <code>Bedrock</code> category.</li>
+</ol>
+<br />
+<ol start="2">
+<li>After the script has finished running it will output a <code>header file</code> and a <code>symbol map</code> for your class to <code>%userprofile%/Desktop/HeaderOut</code>.</li>
+</ol>
+<h2 id="common-issues"><a class="header" href="#common-issues">Common Issues</a></h2>
+<ul>
+<li>
+<h3 id="failed-to-find-"><a class="header" href="#failed-to-find-">Failed to find: '...'</a></h3>
+<p>This occurs when the script is unable to locate the same function from the dumped Vtable in the BDS, this is often because the script has failed to parse a type with generic types. To solve this issue manually complete these functions by hand. </p>
+</li>
+<li>
+<h3 id="unknown-pure-virtual-function"><a class="header" href="#unknown-pure-virtual-function">Unknown pure virtual function</a></h3>
+<p>This occurs because the script is unable to work with pure virtual functions, to solve this issue manually complete these functions by hand.</p>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="33---intro-to-gdb"><a class="header" href="#33---intro-to-gdb">3.3 - Intro to GDB</a></h1>
+<p>The GNU Debugger can be used to find <code>Member Variables, Enums and Structs</code> from the <code>Linux Server</code>. To get started you will need to install the <code>Ubuntu</code> distro through <code>Windows Subsystem for Linux</code>, you can find a guide for this on <a href="https://learn.microsoft.com/en-us/windows/wsl/install">Microsoft Learn</a></p>
+<h2 id="installing-gdb"><a class="header" href="#installing-gdb">Installing GDB</a></h2>
+<ol>
+<li>Open Ubuntu and run <code>sudo apt-get install gdb</code></li>
+<li>To open GDB run <code>gdb</code></li>
+</ol>
+<h2 id="loading-the-linux-server"><a class="header" href="#loading-the-linux-server">Loading the Linux Server</a></h2>
+<ol>
+<li>Use the <code>file &quot;&lt;path&gt;&quot;</code> command to load the <code>bedrock_server</code> file in the <code>Linux Server</code>. To access your files on Windows you can do this through the <code>/mnt/c/</code> directory. </li>
+</ol>
+<blockquote>
+<p>Example: If your files path on Windows was <code>C:/Users/User/Documents/Ubuntu Server/bedrock_server</code> you would use the path <code>&quot;/mnt/c/Users/User/Documents/Ubuntu Server/bedrock_server&quot;</code></p>
+</blockquote>
+<br />
+<ol start="2">
+<li>Next run <code>set pagination off</code> to disable GDB from pausing while printing</li>
+</ol>
+<h2 id="ptype-command"><a class="header" href="#ptype-command">ptype Command</a></h2>
+<ul>
+<li>
+<p>You can use the <code>ptype</code> command to find the <code>member variables</code> of a class. For example for the Item class you would run <code>ptype Item</code> and it would print all of the member variable types and names.</p>
+</li>
+<li>
+<p>You can also use the <code>ptype</code> command to find the values of an enum. For example for the enum CreativeItemCategory, you would run <code>ptype CreativeItemCategory</code>.</p>
+</li>
+<li>
+<p>You can also use the <code>ptype</code> command to print a struct. For example for the CreativeGroupInfo struct you would run <code>ptype CreativeGroupInfo</code></p>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="34---finding-addresses"><a class="header" href="#34---finding-addresses">3.4 - Finding Addresses</a></h1>
+<p>When finding addresses they all need to be gathered from the <code>1.14.60.5 Windows Client</code>, addresses from other versions <strong>cannot</strong> be used. However the Windows Client does not contain symbols, so to find functions, known details can be compared between the server and client to find where the function is used and gain its address.</p>
+<h2 id="vtable-addresses"><a class="header" href="#vtable-addresses">VTable Addresses</a></h2>
+<p>To use virtual functions on a class you will need to get the address of the vtable, luckily for Minecraft 1.14.60.5 this is an easy task. To get started locate the <code>vtable</code> for your class on the <code>Windows Client</code> and open it on the listing view. The address you will need will be the first address in the vtable, and is highlighted in yellow in the image below.</p>
+<p><img src="./images/3.4/vtable_address.png" alt="" /></p>
+<h2 id="finding-functions"><a class="header" href="#finding-functions">Finding Functions</a></h2>
+<blockquote>
+<p>To find addresses for non virtual functions, it will take alot more work and time. These are different methods you can use to locate the function, however they can all be used with eachother to locate your function.</p>
+</blockquote>
+<ul>
+<li>
+<h3 id="cross-referencing-strings"><a class="header" href="#cross-referencing-strings">Cross-Referencing Strings</a></h3>
+<ol>
+<li>If a function contains a string on the <code>Windows Server</code>, you can copy the string and on the <code>Windows Client</code> press <kbd>S</kbd> or <code>Search &gt; Memory</code>. Next set the <code>Format</code> to <code>String</code> and enter the string into the <code>Search Value</code> and press <code>Search All</code>.</li>
+</ol>
+<br />
+<ol start="2">
+<li>
+<p>This will then bring up a list of strings which contain that string, search through the list to locate the string with the identical name and click on it to jump to it in the <code>Listing</code> window.</p>
+<p><img src="./images/3.4/string_client.png" alt="" /></p>
+<p><img src="./images/3.4/string_server.png" alt="" /></p>
+</li>
+</ol>
+<br />
+<ol start="3">
+<li>In this example there is only one function, which means that <code>FUN_01876c50</code> is <code>_mapToBlock</code>. Now in Ghidra copy the name on the client (<code>FUN_01876c50</code>), and press <kbd>G</kbd> or <code>Navigation &gt; Go To</code>, this will take you to the very top of the function so you do not have to scroll. Next right click on the function name and select <code>Edit Function</code> and change the name of the function to the one on the Server.</li>
+</ol>
+<br />
+<ol start="4">
+<li>If there were multiple XRefs, you will have to check each function and compare more details between the Client and Server to find the correct one. </li>
+</ol>
+</li>
+</ul>
+<h2 id="getting-the-function-address"><a class="header" href="#getting-the-function-address">Getting the Function Address</a></h2>
+<p>Once you have found your function on the Client, the address will be the address of the first instruction and is highlighted in yellow in the image below.</p>
+<p><img src="./images/3.4/function_address.png" alt="" /></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
