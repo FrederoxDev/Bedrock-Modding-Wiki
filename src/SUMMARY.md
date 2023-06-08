@@ -11,4 +11,5 @@
 
 - [Writing Headers](./3.0_Writing_Headers.md)
     - [Intro to Symbol Maps](./3.1_Intro_To_Symbol_Maps.md)
-    - [Generating Headers](./3.2_Generating_Headers.md)
+    - [Function Declarations](./3.2_Function_Delcarations.md)
+    - [Intro to GDB](./3.3_Intro_To_GDB.md)
