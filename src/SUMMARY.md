@@ -13,3 +13,4 @@
     - [Intro to Symbol Maps](./3.1_Intro_To_Symbol_Maps.md)
     - [Function Declarations](./3.2_Function_Delcarations.md)
     - [Intro to GDB](./3.3_Intro_To_GDB.md)
+    - [Finding Addresses](./3.4_Finding_Addresses.md)
