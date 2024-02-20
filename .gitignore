@@ -1,1 +1,2 @@
-book
+/node_modules
+/docs/.vitepress/cache

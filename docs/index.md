@@ -1,0 +1,1 @@
+This is meant to be used as an amethyst centric wiki for modding minecraft Bedrock Edition
