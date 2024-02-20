@@ -32,7 +32,7 @@ When doing the search on bds for the string `atlas.items`, we can see that the s
 
 ![bds xrefs for atlas.items](/assets/beginners-guide/atlas-item-strings-bds.png)
 
-This is different to the client where the string is referenced 6 times.
+This is different to the client where the string is referenced 6 times. The difference in the amount of xrefs is likely because of functions that are only on the client, and therefore aren't on the server.
 
 ## Identifying which functions it isn't
 
