@@ -8,7 +8,7 @@ For classes which inherit from only one or no classes, the vtable address will b
 
 ![bds xrefs for atlas.items](/beginners-guide/functions-from-a-vtable/vtable_offset.png)
 
-If we also open the vtable on the server, we can directly copy the order of the functions directly from bds onto the client. In red the index of the functions has been labeled, typically in a vtable at index 0 you will have the destructor for the class which is then followed by the rest of the functions for the class.
+If we also open the vtable on the server, we can directly copy the order of the functions directly from bds onto the client. In red, the index of the functions has been labeled, typically in a vtable at index 0 you will have the destructor for the class, which is then followed by the rest of the virtual functions for the class.
 
 ![vfuncs on bds](/beginners-guide/functions-from-a-vtable/vtable_order.png)
 
