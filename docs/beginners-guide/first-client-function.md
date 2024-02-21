@@ -6,11 +6,11 @@ This guide is meant as a beginners introduction into using IDA to be able to fin
 
 In the database for BDS, we will navigate to the function `Item::Item`. To do this first right click in the list of functions and hit `Modify Filters`.
 
-![modify filters option](/assets/beginners-guide/modify-filters.png)
+![modify filters option](/beginners-guide/first-client-function/modify-filters.png)
 
 Enable the `Regular Expression` option, type `^Item::`, and hit add. This will find all functions that are in the `Item` class.
 
-![filtering for item](/assets/beginners-guide/item-filter.png)
+![filtering for item](/beginners-guide/first-client-function/item-filter.png)
 
 Close the filter window, and in the list of functions find `Item::Item` in the list, and double click it. This will take you to the function in an `IDA View` window, which shows the assembly of the function. To make it more understandable, we can dissasemble the function by hitting `F5`, whilst also having the function selected in the `IDA View` window.
 
@@ -20,25 +20,25 @@ In the pseudocode window, we can identify some information about this function. 
 
 Scrolling down in the pseudocode window, we can also see that this function uses two strings `atlas.items` and `minecraft`.
 
-![strings in item](/assets/beginners-guide/item-ctor-strings.png)
+![strings in item](/beginners-guide/first-client-function/item-ctor-strings.png)
 
 ## Finding the function on the client
 
 Open up your database for the client in another instance of IDA, we can do a search for strings and where they are used, to do this at the top of your screen under `Search` click `Sequence of bytes...`. In the window enter `"atlas.items"`, leave the default options, and click OK. In the list, there should only be one result, so double click it. Next hover over the strings name `aAtlasItem` and press `X`, this will bring up a list of "xrefs" (cross references), which is a list of functions where this string is being used.
 
-![opening xrefs for atlas.items](/assets/beginners-guide/atlas-item-strings-client.png)
+![opening xrefs for atlas.items](/beginners-guide/first-client-function/atlas-item-strings-client.png)
 
 When doing the search on bds for the string `atlas.items`, we can see that the string referenced exactly once by the Item constructor. 
 
-![bds xrefs for atlas.items](/assets/beginners-guide/atlas-item-strings-bds.png)
+![bds xrefs for atlas.items](/beginners-guide/first-client-function/atlas-item-strings-bds.png)
 
-This is different to the client where the string is referenced 6 times.
+This is different to the client where the string is referenced 6 times. The difference in the amount of xrefs is likely because of functions that are only on the client, and therefore aren't on the server.
 
 ## Identifying which functions it isn't
 
 Looking at the list of xrefs for the string on client, we can immediately disregard the first 3 xrefs due to it all being the same function, as we know from earlier the Item constructor only references the string once. When looking at the list of xrefs we only need to look at the function name, and not the information after a `+` or a `:`, as this is just saying where in the function it is being used.
 
-![what to look at](/assets/beginners-guide/xrefs-what-to-lookat.png)
+![what to look at](/beginners-guide/first-client-function/xrefs-what-to-lookat.png)
 
 This leaves us with exactly three options for functions that `Item::Item` could be on the client. Since we have such a small amount of functions to go through, we can look at each one individually and see if we can rule them out. We can navigate to the function by double clicking it, then go into the pseudocode window by hitting `F5`. 
 
