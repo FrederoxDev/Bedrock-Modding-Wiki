@@ -1,1 +1,5 @@
-This is meant to be used as an amethyst centric wiki for modding minecraft Bedrock Edition
+In this wiki I intend to write about how to reverse engineer and mod Minecraft Bedrock Edition, the wiki will mostly be focused around using [Amethyst](https://github.com/FrederoxDev/Amethyst) for modding, but all of the ideas and knowledge in this wiki won't be specific to it.
+
+I am by no means a teacher, nor hell even a decent writer, but I hope that this wiki can be of use to some. The previous iteration of this site was based around modding 1.14 with Zenova, but now it is going to be less specific to any one version and actually applicable to modding recent versions of the game.
+
+So far I have written up a few basic introductory guides to identifying functions on the client, and I plan to add to this project over time. For any feedback please either make an issue on the repository for this wiki, or send me a message on discord `@frederox`, feedback is greatly appreciated and will help improve this wiki.
