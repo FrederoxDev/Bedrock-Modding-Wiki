@@ -339,6 +339,8 @@ struct entt::type_hash<Type> {
 
 ## Using Components
 
+### EntityContext
+
 Minecraft's `EntityContext` class encapsulates the required state for accessing an entity's components.
 
 ::: code-group
@@ -380,11 +382,96 @@ struct EntityContext : EntityContextBase {
 };
 ```
 
+:::
+
 > [!NOTE]
 > For simplicity, these game classes are expressed as structs to imply public visibility. The actual type designation
 > and member visibility may vary from Minecraft's actual source code.
 
-Examples from this point on will be based on the most recent revision of the relevant Minecraft ABI (Currently 1.20.50+).
+Samples from this point on will be based on the most recent revision of the relevant Minecraft ABI (Currently 1.20.50+).
 If you are developing for a different Minecraft release, slight modifications may be required.
 
-:::
+We can define a few helper functions for accessing and modifying components:
+```C++
+struct EntityContext {
+    // ... fields omitted ...
+
+    template<std::derived_from<IEntityComponent> T>
+    [[nodiscard]] T* tryGetComponent() {
+        return this->enttRegistry.try_get<T>(this->entity);
+    }
+
+    template<std::derived_from<IEntityComponent> T>
+    [[nodiscard]] const T* tryGetComponent() const {
+        return this->enttRegistry.try_get<T>(this->entity);
+    }
+
+    template<std::derived_from<IEntityComponent> T>
+    [[nodiscard]] bool hasComponent() const {
+        return this->enttRegistry.all_of<T>(this->entity);
+    }
+
+    template<std::derived_from<IEntityComponent> T>
+    T& getOrAddComponent() {
+        return this->enttRegistry.get_or_emplace<T>(this->entity);
+    }
+
+    template<std::derived_from<IEntityComponent> T>
+    void removeComponent() {
+        this->enttRegistry.remove<T>(this->entity);
+    }
+};
+```
+
+> [!WARNING]
+> Both `getOrAddComponent` and `removeComponent` call the non-const version of `entt::basic_registry<...>::assure<T>`.
+> If either of these functions are called before storage for the component `T` has not already been created by
+> Minecraft, the storage will be created by your mod. The undesired consequence of this is that the storage object's
+> virtual function table will be located in the read-only data section of your mod's binary. Unloading the mod after
+> this point will cause a game crash. While there are methods to prevent this error, this guide does not currently
+> address them.
+
+### Actors
+
+Now that we have a definition of `EntityContext`, we need to be able to access an instance of it for Actors.
+Fortunately, this is an easy task:
+
+```C++
+class Actor {
+public:
+    /* this + 0x0 */ Actor_vfbl* __vftable; // Compiler generated
+    /* this + 0x8 */ EntityContext entity;
+    // ... fields omitted ...
+};
+```
+
+If defining the actual struct for `Actor` isn't preferred, [libhat](https://github.com/BasedInc/libhat) provides
+`hat::member_at`, a utility function for accessing members from class data offsets.
+
+```C++
+class Actor {
+public:
+    // Utilize C++23's explicit this object parameter
+    // to avoid writing const and non-const overloads 
+    decltype(auto) getEntity(this auto& self) {
+        return hat::member_at<EntityContext>(&self, 0x8);
+    }
+};
+```
+
+Now if we obtain an instance of an `Actor`, such as the client's local player, accessing components is simple:
+
+```C++
+void onLevelTick() {
+    auto& player = clientInstance->getLocalPlayer().getEntity();
+    
+    if (player.hasComponent<FlagComponent<OnGroundFlag>>()) {
+        logToChat("Player is on the ground");
+    }
+
+    if (auto* svc = player.tryGetComponent<StateVectorComponent>(); svc) {
+        logToChat("Player is at {}", svc->pos);
+    }
+}
+
+```
