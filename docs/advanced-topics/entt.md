@@ -130,8 +130,9 @@ When defining components, there are a few key things that must be matched to the
 1. The type name
 2. The type's class/struct designation
 3. The type size
+4. The type's hash
 
-### Matching the declaration
+### Matching the Declaration
 
 Component names and their and class/struct designation are simple enough to find. EnTT leaves strings in all Minecraft:
 Bedrock Edition binaries as part of type name stored in the static `entt::type_info<T>` instance for all components;
@@ -150,7 +151,7 @@ names, we can begin a definition:
 struct ActorEquipmentComponent : IEntityComponent {};
 ```
 
-### Finding the size
+### Finding the Size
 
 There are multiple methods for finding the size of a component through IDA. The exact method used will be dependent on
 the component, but the easiest way is finding the codegen for `entt::basic_registry<EntityId>::try_get<T>(EntityId)`.
@@ -190,7 +191,7 @@ And finally `entt::basic_storage<T, EntityId>::assure_at_least`:
 The component's size can be identified in the same manner as before by looking at the scale applied to the `(vN & 0x7F)`
 term. This matches the previous result of `16` bytes.
 
-### Reversing members
+### Reversing Members
 
 Now that we have the size of the component, we can pad the definition like this:
 ```C++
@@ -268,6 +269,71 @@ With this information, the definition for `ActorEquipmentComponent` can be compl
 struct ActorEquipmentComponent : IEntityComponent {
     std::unique_ptr<SimpleContainer> handContainer;
     std::unique_ptr<SimpleContainer> armorContainer;
+};
+```
+
+### Type Hashes
+
+> [!NOTE]
+> If you are using the compiler associated with your mod's targeted Minecraft: Bedrock Edition platform, the information
+> provided in this section is not critical.
+> 
+> For more on what compiler you should be using, [continue reading](/beginners-guide/configuring-your-compiler.html#picking-a-compiler).
+
+The `entt::registry` creates a storage object for each component type. In order to retrieve the storage instance at
+runtime, a hash of the component's type is used as a key into a `map<type_hash, component_storage>`. While the hash of
+a type is based on the prettified name of that type, it is not portable. Consider the following example:
+
+```C++
+template<typename T>
+class FlagComponent : IEntityComponent {};
+
+struct OnGroundFlag {};
+```
+
+| Compiler  | `entt::type_name<T>::value()`                | `entt::type_hash<T>::value()` |
+|:----------|:---------------------------------------------|:------------------------------|
+| MSVC      | `"class FlagComponent<struct OnGroundFlag>"` | `0x211F2DE1`                  |
+| GCC/Clang | `"FlagComponent<OnGroundFlag>"`              | `0x062EEC98`                  |
+
+This discrepancy is not an issue if you're using the recommended compiler for a given Bedrock platform. However, if you
+are using [Clang on Windows](/beginners-guide/configuring-your-compiler.html#clang-on-windows), it does become an issue.
+Clang  will produce the same type hash regardless of whether you are using it in Microsoft compatibility mode. To
+work around this problem, we can specialize `entt::type_hash`.
+
+There are many approaches to specializing `entt::type_hash` to maintain compatibility between compilers. This guide will
+specifically address a solution for using Clang on Windows when developing mods for Bedrock Edition on Windows.
+
+Building upon the previous example, let's add a few static members to our classes. For this, we'll be using
+`fixed_string` provided by [libhat](https://github.com/BasedInc/libhat):
+
+```C++
+template<typename T>
+class FlagComponent : IEntityComponent {
+public:
+    static constexpr hat::fixed_string type_name
+        = "class FlagComponent<" + T::type_name + ">";
+};
+
+struct OnGroundFlag {
+    static constexpr hat::fixed_string type_name
+        = "struct OnGroundFlag";
+};
+```
+
+Then create a `entt::type_hash` specialization for types derived from `IEntityComponent`:
+
+```C++
+template<std::derived_from<IEntityComponent> Type>
+struct entt::type_hash<Type> {
+    [[nodiscard]] static consteval id_type value() noexcept {
+        constexpr auto name = Type::type_name;
+        return hashed_string::value(name.data(), name.size());
+    }
+
+    [[nodiscard]] consteval operator id_type() const noexcept {
+        return value();
+    }
 };
 ```
 
