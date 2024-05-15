@@ -52,8 +52,8 @@ target_link_libraries(MyTarget PRIVATE EnTT::EnTT)
 
 ## Configuration
 
-Mojang has configured EnTT in multiple ways to suit the needs of Minecraft: Bedrock Edition. In order to have binary
-compatibility with Minecraft and avoid runtime errors, the configuration of EnTT must match exactly.
+Mojang has configured EnTT in multiple ways to suit the needs of Minecraft: Bedrock Edition. In order for your mod to
+have binary compatibility with Minecraft and avoid runtime errors, the configuration of EnTT must match exactly.
 
 The first step is to define a custom entity identifier type:
 
@@ -142,6 +142,7 @@ however, only Windows binaries compiled with MSVC will include the class/struct 
 > [!TIP]
 > The majority of entity components are `struct` types. A few notable `class` exceptions are `ActorOwnerComponent` and
 > `FlagComponent`.
+
 We'll be taking a look at `ActorEquipmentComponent` for this guide. Looking back at the screenshot with all the type
 names, we can begin a definition:
 
@@ -208,8 +209,8 @@ be extremely tedious, but a solid starting point is to examine the `try_get` usa
 
 ![try_get usages](/advanced-topics/entt/try_get-xrefs.png)
 
-The first usage provides some insight, a virtual function call is being performed on an object whose address is stored
-at offset 8 in the component.
+The first usage provides some insight, line 14 in the decompiled pseudocode contains a virtual function call being
+performed on an object whose address is stored at offset 8 in the component.
 
 ![getAllArmor](/advanced-topics/entt/xref-getAllArmor.png)
 
@@ -263,9 +264,61 @@ not seem significant. However, it's actually indicative of a `std::unique_ptr` t
 
 With this information, the definition for `ActorEquipmentComponent` can be completed:
 
-```cpp
+```C++
 struct ActorEquipmentComponent : IEntityComponent {
     std::unique_ptr<SimpleContainer> handContainer;
     std::unique_ptr<SimpleContainer> armorContainer;
 };
 ```
+
+## Using Components
+
+Minecraft's `EntityContext` class encapsulates the required state for accessing an entity's components.
+
+::: code-group
+
+```C++ [1.20.50+]
+struct EntityRegistry : std::enable_shared_from_this<EntityRegistry> {
+    std::string name;
+    entt::basic_registry<EntityId> registry;
+    uint32_t id;
+};
+
+struct EntityContext {
+    EntityRegistry& registry;
+    entt::basic_registry<EntityId>& enttRegistry;
+    EntityId entity;
+};
+```
+
+```C++ [1.20-1.20.41]
+struct EntityRegistryBase {
+    entt::basic_registry<EntityId>& registry;
+    uint32_t id;
+};
+
+struct EntityRegistry : EntityRegistryBase, std::enable_shared_from_this<EntityRegistry> {
+    std::string name;
+    entt::basic_registry<EntityId> ownedRegistry;
+};
+
+struct EntityContextBase {
+    EntityRegistryBase& registry;
+    EntityId entity;
+};
+
+struct EntityContext : EntityContextBase {
+    entt::basic_registry<EntityId>& getEnttRegistry() const {
+        return static_cast<EntityRegistry&>(this->registry).ownedRegistry;
+    }
+};
+```
+
+> [!NOTE]
+> For simplicity, these game classes are expressed as structs to imply public visibility. The actual type designation
+> and member visibility may vary from Minecraft's actual source code.
+
+Examples from this point on will be based on the most recent revision of the relevant Minecraft ABI (Currently 1.20.50+).
+If you are developing for a different Minecraft release, slight modifications may be required.
+
+:::
