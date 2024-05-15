@@ -33,7 +33,38 @@ To address this issue, see [Type Hashes](/advanced-topics/entt.html#type-hashes)
 
 ### Using Visual Studio
 
-> TODO
+Open the Visual Studio Installer and select "Modify" on your installation.
+
+![vs installer modify](/beginners-guide/configuring-your-compiler/vs-installer-modify.png)
+
+Click on "Individual Components" at the top and search for "LLVM". Make sure that both "C++ Clang Compiler for Windows"
+and "MSBuild support for LLVM" are selected.
+
+![vs installer llvm](/beginners-guide/configuring-your-compiler/vs-installer-llvm.png)
+
+Click "Modify" in the bottom right and wait for the installation to complete.
+
+![vs installer finish](/beginners-guide/configuring-your-compiler/vs-installer-finish.png)
+
+***If you are using a Microsoft Visual Studio Project (MSBuild)***:
+
+Open Microsoft Visual Studio and navigate to `Project > [Your Project Name] Properties`
+
+![vs project properties](/beginners-guide/configuring-your-compiler/vs-project-properties.png)
+
+Select "LLVM (clang-cl)" from the "Platform Toolset" dropdown.
+
+![vs platform toolset](/beginners-guide/configuring-your-compiler/vs-properties-toolset.png)
+
+***If you are using a CMake project***:
+
+Click on "Manage Configurations" under the build type dropdown.
+
+![vs manage configurations](/beginners-guide/configuring-your-compiler/vs-manage-configurations.png)
+
+Select `clang_cl_x64` for the desired build configurations.
+
+![vs configurations toolset](/beginners-guide/configuring-your-compiler/vs-configurations-toolset.png)
 
 ### Using CLion
 
