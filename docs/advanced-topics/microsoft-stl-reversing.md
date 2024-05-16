@@ -5,7 +5,7 @@
 ### `std::unique_ptr`
 
 *Disclaimer: This section is currently incomplete, and branches off of the
-[reversing members](/advanced-topics/entt.html#reversing-the-members) section of the EnTT guide.*
+[reversing members](/advanced-topics/entt.html#reversing-members) section of the EnTT guide.*
 
 Here's the relevant code snippet from the Microsoft [STL](https://github.com/microsoft/STL/blob/8dc4faadafb52e3e0a627e046b41258032d9bc6a/stl/inc/memory#L3408)
 implementation, with added comments for clarification:
