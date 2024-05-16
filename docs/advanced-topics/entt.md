@@ -438,7 +438,7 @@ Fortunately, this is an easy task:
 ```C++
 class Actor {
 public:
-    /* this + 0x0 */ Actor_vfbl* __vftable; // Compiler generated
+    /* this + 0x0 */ Actor_vtbl* __vftable; // Compiler generated
     /* this + 0x8 */ EntityContext entity;
     // ... fields omitted ...
 };
