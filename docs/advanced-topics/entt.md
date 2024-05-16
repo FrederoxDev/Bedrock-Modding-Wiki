@@ -452,7 +452,7 @@ class Actor {
 public:
     // Utilize C++23's explicit this object parameter
     // to avoid writing const and non-const overloads 
-    decltype(auto) getEntity(this auto& self) {
+    [[nodiscard]] auto& getEntity(this auto& self) {
         return hat::member_at<EntityContext>(&self, 0x8);
     }
 };
