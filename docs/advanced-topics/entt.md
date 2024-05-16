@@ -425,11 +425,10 @@ struct EntityContext {
 
 > [!WARNING]
 > Both `getOrAddComponent` and `removeComponent` call the non-const version of `entt::basic_registry<...>::assure<T>`.
-> If either of these functions are called before storage for the component `T` has not already been created by
-> Minecraft, the storage will be created by your mod. The undesired consequence of this is that the storage object's
-> virtual function table will be located in the read-only data section of your mod's binary. Unloading the mod after
-> this point will cause a game crash. While there are methods to prevent this error, this guide does not currently
-> address them.
+> If either of these functions are called before storage for the component `T` has been created by Minecraft, the
+> storage will be created by your mod. The undesired consequence of this is that the storage object's virtual function
+> table will be located in the read-only data section of your mod's binary. Unloading the mod after this point will
+> cause a game crash. While there are methods to prevent this error, this guide does not currently address them.
 
 ### Actors
 
