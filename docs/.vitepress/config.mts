@@ -22,6 +22,7 @@ export default defineConfig({
         items: [
           { text: 'Find your first client function', link: '/beginners-guide/first-client-function' },
           { text: 'Find functions from a vtable', link: '/beginners-guide/functions-from-a-vtable' },
+          { text: 'Create your first hook', link: 'beginners-guide/first-hook.md' },
           { text: 'Configuring your compiler', link: '/beginners-guide/configuring-your-compiler.md' }
         ]
       },
