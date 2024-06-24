@@ -26,6 +26,12 @@ export default defineConfig({
         ]
       },
       {
+        text: "Amethyst",
+        items: [
+          { text: 'Building Amethyst', link: '/amethyst/setup-dev-env.md' }
+        ]
+      },
+      {
         text: 'Advanced Topics',
         items: [
           { text: 'EnTT', link: '/advanced-topics/entt' },
