@@ -19,7 +19,8 @@ The specific version of EnTT that is required for your Minecraft version will va
 
 | MC:BE Release     | EnTT Tag  | EnTT Commit Hash                           |
 |:------------------|:----------|:-------------------------------------------|
-| `1.20.70+`        | `v3.13.1` | `2909e7ab1f1e73a36f778319070695611e3fa47b` |
+| `1.21.0+`         | N/A       | `f931687ff04d435871ac9664bb299f71f2a8fafc` |
+| `1.20.70-1.20.8x` | `v3.13.1` | `2909e7ab1f1e73a36f778319070695611e3fa47b` |
 | `1.20.50-1.20.6x` | N/A       | `62a13526c989f14eff348c28c061542ac7a16d45` |
 | `1.20.4x`         | N/A       | `717897052477515260bde3fd21fe987662666621` |
 
