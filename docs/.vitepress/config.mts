@@ -22,7 +22,6 @@ export default defineConfig({
         items: [
           { text: 'Find your first client function', link: '/beginners-guide/first-client-function' },
           { text: 'Find functions from a vtable', link: '/beginners-guide/functions-from-a-vtable' },
-          { text: 'Configuring your compiler', link: '/beginners-guide/configuring-your-compiler.md' }
         ]
       },
       {
@@ -34,8 +33,9 @@ export default defineConfig({
       {
         text: 'Advanced Topics',
         items: [
-          { text: 'EnTT', link: '/advanced-topics/entt' },
+          { text: 'Configuring your compiler', link: '/advanced-topics/configuring-your-compiler.md' },
           { text: 'Microsoft STL Reversing', link: '/advanced-topics/microsoft-stl-reversing.md' },
+          { text: 'EnTT', link: '/advanced-topics/entt' },
         ]
       }
     ],
