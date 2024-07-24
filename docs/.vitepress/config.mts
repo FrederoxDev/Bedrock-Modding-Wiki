@@ -11,7 +11,7 @@ export default defineConfig({
       { text: 'Home', link: '/' },
       { text: 'Beginners Guide', link: '/beginners-guide/first-client-function' }
     ],
-
+    
     outline: {
       level: [2, 3]
     },
@@ -20,14 +20,10 @@ export default defineConfig({
       {
         text: 'Beginners Guide',
         items: [
-          { text: 'Find your first client function', link: '/beginners-guide/first-client-function' },
-          { text: 'Find functions from a vtable', link: '/beginners-guide/functions-from-a-vtable' },
-        ]
-      },
-      {
-        text: "Amethyst",
-        items: [
-          { text: 'Building Amethyst', link: '/amethyst/setup-dev-env.md' }
+          { text: '1 - Find your first client function', link: '/beginners-guide/first-client-function' },
+          { text: '2 - Find functions from a vtable', link: '/beginners-guide/functions-from-a-vtable' },
+          { text: '3 - Building Amethyst', link: '/beginners-guide/setup-dev-env.md' },
+          { text: '4 - Hook a function', link: '/beginners-guide/hook-a-function.md' }
         ]
       },
       {
