@@ -20,7 +20,7 @@ notable incompatibilities are found in the future, the table will be updated acc
 
 > [!IMPORTANT]
 > If you are targeting Windows, the correct runtime library must be configured,
-> [continue reading](/beginners-guide/configuring-your-compiler.html#setting-the-runtime-library).
+> [continue reading](/advanced-topics/configuring-your-compiler.html#setting-the-runtime-library).
 
 ## Setting the Runtime Library
 
@@ -84,53 +84,53 @@ To address this issue, see [Type Hashes](/advanced-topics/entt.html#type-hashes)
 
 Open the Visual Studio Installer and select "Modify" on your installation.
 
-![vs installer modify](/beginners-guide/configuring-your-compiler/vs-installer-modify.png)
+![vs installer modify](/advanced-topics/configuring-your-compiler/vs-installer-modify.png)
 
 Click on "Individual Components" at the top and search for "LLVM". Make sure that both "C++ Clang Compiler for Windows"
 and "MSBuild support for LLVM" are selected.
 
-![vs installer llvm](/beginners-guide/configuring-your-compiler/vs-installer-llvm.png)
+![vs installer llvm](/advanced-topics/configuring-your-compiler/vs-installer-llvm.png)
 
 Click "Modify" in the bottom right and wait for the installation to complete.
 
-![vs installer finish](/beginners-guide/configuring-your-compiler/vs-installer-finish.png)
+![vs installer finish](/advanced-topics/configuring-your-compiler/vs-installer-finish.png)
 
 ### Visual Studio + MSBuild
 
 Open Microsoft Visual Studio and navigate to `Project > [Your Project Name] Properties`
 
-![vs project properties](/beginners-guide/configuring-your-compiler/vs-project-properties.png)
+![vs project properties](/advanced-topics/configuring-your-compiler/vs-project-properties.png)
 
 Select "LLVM (clang-cl)" from the "Platform Toolset" dropdown.
 
-![vs platform toolset](/beginners-guide/configuring-your-compiler/vs-properties-toolset.png)
+![vs platform toolset](/advanced-topics/configuring-your-compiler/vs-properties-toolset.png)
 
 ### Visual Studio + CMake
 
 Click on "Manage Configurations" under the build type dropdown.
 
-![vs manage configurations](/beginners-guide/configuring-your-compiler/vs-manage-configurations.png)
+![vs manage configurations](/advanced-topics/configuring-your-compiler/vs-manage-configurations.png)
 
 Select `clang_cl_x64` for the desired build configurations.
 
-![vs configurations toolset](/beginners-guide/configuring-your-compiler/vs-configurations-toolset.png)
+![vs configurations toolset](/advanced-topics/configuring-your-compiler/vs-configurations-toolset.png)
 
 ### CLion
 
 Open the IDE settings through `File > Settings` or using `Ctrl+Alt+S`.
 
-![open settings](/beginners-guide/configuring-your-compiler/clion-open-settings.png)
+![open settings](/advanced-topics/configuring-your-compiler/clion-open-settings.png)
 
 Navigate to `Build, Execution, Deployment > Toolchains` and add a new "Visual Studio" toolchain.
 
-![new toolchain](/beginners-guide/configuring-your-compiler/clion-new-toolchain.png)
+![new toolchain](/advanced-topics/configuring-your-compiler/clion-new-toolchain.png)
 
 Set the "Architecture" field to `amd64` and the C and C++ compiler paths to
 <br>`[VS Install Dir]\VC\Tools\Llvm\x64\bin\clang-cl.exe`.
 
-![compiler path](/beginners-guide/configuring-your-compiler/clion-compiler-path.png)
+![compiler path](/advanced-topics/configuring-your-compiler/clion-compiler-path.png)
 
 Navigate to `Build, Execution, Deployment > CMake` and set the toolchain in the relevant CMake profiles to the
 Clang-Cl toolchain we just created.
 
-![profile toolchain](/beginners-guide/configuring-your-compiler/clion-profile-toolchain.png)
+![profile toolchain](/advanced-topics/configuring-your-compiler/clion-profile-toolchain.png)
