@@ -279,7 +279,7 @@ struct ActorEquipmentComponent : IEntityComponent {
 > If you are using the compiler associated with your mod's targeted Minecraft: Bedrock Edition platform, the information
 > provided in this section is not critical.
 > 
-> For more on what compiler you should be using, [continue reading](/beginners-guide/configuring-your-compiler.html#picking-a-compiler).
+> For more on what compiler you should be using, [continue reading](/advanced-topics/configuring-your-compiler.html#picking-a-compiler).
 
 The `entt::registry` creates a storage object for each component type. In order to retrieve the storage instance at
 runtime, a hash of the component's type is used as a key into a `map<type_hash, component_storage>`. While the hash of
@@ -298,7 +298,7 @@ struct OnGroundFlag {};
 | GCC/Clang | `"FlagComponent<OnGroundFlag>"`              | `0x062EEC98`                  |
 
 This discrepancy is not an issue if you're using the recommended compiler for a given Bedrock platform. However, if you
-are using [Clang on Windows](/beginners-guide/configuring-your-compiler.html#clang-on-windows), it does become an issue.
+are using [Clang on Windows](/advanced-topics/configuring-your-compiler.html#clang-on-windows), it does become an issue.
 Clang  will produce the same type hash regardless of whether you are using it in Microsoft compatibility mode. To
 work around this problem, we can specialize `entt::type_hash`.
 

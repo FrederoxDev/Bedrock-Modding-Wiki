@@ -11,7 +11,7 @@ export default defineConfig({
       { text: 'Home', link: '/' },
       { text: 'Beginners Guide', link: '/beginners-guide/first-client-function' }
     ],
-
+    
     outline: {
       level: [2, 3]
     },
