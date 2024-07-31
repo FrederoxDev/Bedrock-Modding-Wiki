@@ -20,9 +20,9 @@ export default defineConfig({
       {
         text: 'Beginners Guide',
         items: [
+          { text: 'Building Amethyst', link: '/beginners-guide/setup-dev-env.md' },
           { text: 'Find your first client function', link: '/beginners-guide/first-client-function' },
           { text: 'Find functions from a vtable', link: '/beginners-guide/functions-from-a-vtable' },
-          { text: 'Building Amethyst', link: '/beginners-guide/setup-dev-env.md' }
         ]
       },
       {
