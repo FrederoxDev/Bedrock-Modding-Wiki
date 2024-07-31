@@ -22,12 +22,13 @@ export default defineConfig({
         items: [
           { text: 'Find your first client function', link: '/beginners-guide/first-client-function' },
           { text: 'Find functions from a vtable', link: '/beginners-guide/functions-from-a-vtable' },
+          { text: 'Building Amethyst', link: '/beginners-guide/setup-dev-env.md' }
         ]
       },
       {
-        text: "Amethyst",
+        text: 'Concepts',
         items: [
-          { text: 'Building Amethyst', link: '/amethyst/setup-dev-env.md' }
+          { text: 'Signatures', link: '/concepts/signatures.md' }
         ]
       },
       {
