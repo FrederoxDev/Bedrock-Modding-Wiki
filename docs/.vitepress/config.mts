@@ -28,7 +28,8 @@ export default defineConfig({
       {
         text: 'Concepts',
         items: [
-          { text: 'Signatures', link: '/concepts/signatures.md' }
+          { text: 'Signatures', link: '/concepts/signatures.md' },
+          { text: 'Deduplication', link: '/concepts/deduplication.md' }
         ]
       },
       {
