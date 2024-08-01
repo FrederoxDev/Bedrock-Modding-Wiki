@@ -48,7 +48,7 @@ Deduplication can be harmful in situations where we want to modify one function 
 
 ### Limitations of IDA and other RE programs:
 
-When two functions get merged into one, this means that in the debugging info an address could have multiple signatures associated with it. Tools like IDA can often only show one associated symbol to an address, this can be an issue when looking at the order of virtual functions in a vtable for example, where IDA shows one symbol repeated again and again, rather than the real symbol for the function at that address (if it wasn't for merging).
+When two functions get merged into one, this means that in the debugging info an address could have multiple symbols associated with it. Tools like IDA can often only show one associated symbol to an address, this can be an issue when looking at the order of virtual functions in a vtable for example, where IDA shows one symbol repeated again and again, rather than the real symbol for the function at that address (if it wasn't for merging).
 
 ![](/concepts/deduplication/repeated_symbols.png)
 
