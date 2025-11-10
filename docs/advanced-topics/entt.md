@@ -19,7 +19,9 @@ The specific version of EnTT that is required for your Minecraft version will va
 
 | MC:BE Release     | EnTT Tag  | EnTT Commit Hash                           |
 |:------------------|:----------|:-------------------------------------------|
-| `1.21.0+`         | N/A       | `f931687ff04d435871ac9664bb299f71f2a8fafc` |
+| `1.21.90+`        | N/A       | `fe8d7d78c4823e8a66a050bf86f5c6318cf76ce7` |     
+| `1.21.60-1.21.8x` | N/A       | `8e6bbc4a6c7182a0d8c1c9b46ebe5858585e12d9` |     
+| `1.21.0-1.21.5x`  | N/A       | `f931687ff04d435871ac9664bb299f71f2a8fafc` |
 | `1.20.70-1.20.8x` | `v3.13.1` | `2909e7ab1f1e73a36f778319070695611e3fa47b` |
 | `1.20.50-1.20.6x` | N/A       | `62a13526c989f14eff348c28c061542ac7a16d45` |
 | `1.20.4x`         | N/A       | `717897052477515260bde3fd21fe987662666621` |
@@ -94,7 +96,21 @@ struct entt::entt_traits<EntityId> : entt::basic_entt_traits<EntityIdTraits> {
 Next, component storage must be configured. The method demonstrated below is done by creating a base class that all
 components will be derived from, and then specializing `entt::component_traits` for derivatives of that base class.
 
-```C++
+::: code-group
+
+```C++ [1.21.90+]
+struct IEntityComponent {};
+
+template<std::derived_from<IEntityComponent> Type>
+struct entt::component_traits<Type, EntityId> {
+    using element_type = Type;
+    using entity_type = EntityId;
+    static constexpr bool in_place_delete = true;
+    static constexpr std::size_t page_size = 128 * !std::is_empty_v<Type>;
+};
+```
+
+```C++ [1.20-1.21.8x]
 struct IEntityComponent {};
 
 template<std::derived_from<IEntityComponent> Type>
@@ -104,6 +120,8 @@ struct entt::component_traits<Type> {
     static constexpr std::size_t page_size = 128 * !std::is_empty_v<Type>;
 };
 ```
+
+:::
 
 Lastly, [signal handlers](https://github.com/skypjack/entt/wiki/Crash-Course:-entity-component-system#observe-changes)
 must be disabled for `EntityId` derived storage types, this is done by specializing `entt::storage_type`, and not
