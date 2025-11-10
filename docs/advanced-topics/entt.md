@@ -98,7 +98,7 @@ components will be derived from, and then specializing `entt::component_traits` 
 
 ::: code-group
 
-```C++ [1.20.90+]
+```C++ [1.21.90+]
 struct IEntityComponent {};
 
 template<std::derived_from<IEntityComponent> Type>
